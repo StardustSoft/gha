@@ -2,11 +2,12 @@ name: Build
 
 on:
   workflow_call:
-    registry-password:
-      required: true
+    secrets:
+      registry-password:
+        required: true
 
-    registry-uri:
-      required: true
+      registry-uri:
+        required: true
 
 jobs:
   build:
