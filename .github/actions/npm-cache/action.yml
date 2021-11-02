@@ -1,17 +1,20 @@
 name: Cache node modules
 description: Cache node module
 
+inputs:
+  name:
+    description: Cache name
+    required: false
+    default: node-module-cache
+
 runs:
   using: composite
   steps:
-    - name: Cache node modules
-      uses: actions/cache@v2
-      env:
-        cache-name: cache-node-modules
+    - uses: actions/cache@v2
       with:
         path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-npm-${{ inputs.name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
+          ${{ runner.os }}-npm-${{ inputs.name }}-
+          ${{ runner.os }}-npm-
           ${{ runner.os }}-

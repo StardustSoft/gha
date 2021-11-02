@@ -1,0 +1,49 @@
+name: Build
+
+on:
+  workflow_call:
+    inputs:
+      publish:
+        type: boolean
+        required: false
+        default: false
+
+    secrets:
+      registry-password:
+        required: true
+
+      registry-uri:
+        required: true
+
+jobs:
+  install:
+    name: Install Dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: stardusttech-io/actions/.github/actions/install@master
+        with:
+          registry-password: ${{ secrets.registry-password }}
+          registry-uri: ${{ secrets.registry-uri }}
+
+  build:
+    name: Build Package
+    needs: install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: stardusttech-io/actions/.github/actions/build@master
+        with:
+          build-artifact: package-build
+          registry-password: ${{ secrets.registry-password }}
+          registry-uri: ${{ secrets.registry-uri }}
+
+  publish:
+    name: Publish Package
+    needs: build
+    if: ${{ inputs.publish }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: stardusttech-io/actions/.github/actions/publish@master
+        with:
+          build-artifact: package-build
+          registry-password: ${{ secrets.registry-password }}
+          registry-uri: ${{ secrets.registry-uri }}

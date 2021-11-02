@@ -1,0 +1,32 @@
+name: Build
+description: Build
+
+inputs:
+  build-artifact:
+    description: Build artifact name
+    required: true
+
+  registry-password:
+    description: Internal registry password
+    required: true
+
+  registry-uri:
+    description: Internal registry uri
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: stardusttech-io/actions/.github/actions/install@master
+      with:
+        registry-password: ${{ inputs.registry-password }}
+        registry-uri: ${{ inputs.registry-uri }}
+
+    - run: npm run build
+      shell: bash
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ inputs.build-artifact }}
+        path: |
+          dist

@@ -1,0 +1,11 @@
+name: Configure git user
+description: Configure git user
+
+runs:
+  using: composite
+  steps:
+    - run: git config --global user.email "github-actions@stardusttech.io"
+      shell: bash
+
+    - run: git config --global user.name "GitHub Actions"
+      shell: bash

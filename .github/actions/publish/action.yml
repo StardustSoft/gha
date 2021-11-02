@@ -1,0 +1,41 @@
+name: Publish internal package
+description: Publish internal package
+
+inputs:
+  build-artifact:
+    description: Build artifact name
+    required: true
+
+  registry-password:
+    description: Internal registry password
+    required: true
+
+  registry-uri:
+    description: Internal registry uri
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: ${{ inputs.build-artifact }}
+
+    - uses: stardusttech-io/actions/.github/actions/configure-registry@master
+      with:
+        registry-password: ${{ inputs.registry-password }}
+        registry-uri: ${{ inputs.registry-uri }}
+
+    - uses: stardusttech-io/actions/.github/actions/configure-git@master
+
+    - run: npm version patch
+      shell: bash
+
+    - run: npm publish
+      shell: bash
