@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  workflow_call:
+    registry-password:
+      required: true
+
+    registry-uri:
+      required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - uses: stardusttech-io/actions/.github/actions/authenticate-registry.yml@master
+        with:
+          uri: ${{ secrets.registry-uri }}
+          password: ${{ secrets.registry-password }}
+
+      - uses: stardusttech-io/actions/.github/actions/npm-cache.yml@master
+
+      - run: npm install
+      - run: npm run build
