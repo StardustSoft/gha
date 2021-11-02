@@ -11,10 +11,18 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: ls -a
-      shell: bash
-    - run: cat ~/.npmrc
-      shell: bash
+    - uses: actions/checkout@v2
+      with:
+        repository: stardusttech-io/actions
+        ref: master
+        token: ${{ secrets.PAT }}
+        path: ./github/actions
+
+    - uses: ./github/actions/authenticate-registry
+      with:
+        uri: ${{ secrets.REGISTRY_URI }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+
     - name: Configuring git user email
       run: git config --global user.email "github-actions@stardusttech.io"
       shell: bash

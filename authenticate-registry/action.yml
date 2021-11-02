@@ -3,7 +3,11 @@ name: Authenticate Internal Registry
 description: Authenticate internal registry.
 
 inputs:
-  registry-password:
+  uri:
+    description: Registry URI
+    required: true
+
+  password:
     description: Registry password
     required: true
 
@@ -15,21 +19,17 @@ runs:
       shell: bash
 
     - name: Appending scoped @stardust registry
-      run: echo "@stardust:registry=https://us-east1-npm.pkg.dev/stardusttech-io/stardust-registry/" >> ~/.npmrc
+      run: echo "@stardust:registry=https:${{ inputs.uri }}/" >> ~/.npmrc
       shell: bash
 
     - name: Appending registry password
-      run: echo "//us-east1-npm.pkg.dev/stardusttech-io/stardust-registry/:_password=${{ inputs.registry-password }}" >> ~/.npmrc
+      run: echo "${{ inputs.uri }}/:_password=${{ inputs.password }}" >> ~/.npmrc
       shell: bash
 
     - name: Appending registry username
-      run: echo "//us-east1-npm.pkg.dev/stardusttech-io/stardust-registry/:username=_json_key_base64" >> ~/.npmrc
+      run: echo "${{ inputs.uri }}/:username=_json_key_base64" >> ~/.npmrc
       shell: bash
 
     - name: Appending registry email
-      run: echo "//us-east1-npm.pkg.dev/stardusttech-io/stardust-registry/:email=not.valid@email.com" >> ~/.npmrc
-      shell: bash
-
-    - name: Echoing output
-      run: cat ~/.npmrc
+      run: echo "${{ inputs.uri }}/:email=not.valid@email.com" >> ~/.npmrc
       shell: bash
