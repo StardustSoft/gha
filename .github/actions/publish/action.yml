@@ -2,7 +2,7 @@ name: Publish internal package
 description: Publish internal package
 
 inputs:
-  build-artifact:
+  build-artifact-name:
     description: Build artifact name
     required: true
 
@@ -25,7 +25,7 @@ runs:
 
     - uses: actions/download-artifact@v2
       with:
-        name: ${{ inputs.build-artifact }}
+        name: ${{ inputs.build-artifact-name }}
 
     - uses: stardusttech-io/gha/.github/actions/configure-registry@master
       with:

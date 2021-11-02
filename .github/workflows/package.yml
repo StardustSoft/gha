@@ -3,7 +3,25 @@ name: Internal package workflow
 on:
   workflow_call:
     inputs:
-      publish:
+      build-artifact-name:
+        type: string
+        required: true
+
+      cache-name:
+        type: string
+        required: true
+
+      run-build:
+        type: boolean
+        required: false
+        default: true
+
+      run-lint:
+        type: boolean
+        required: false
+        default: false
+
+      run-publish:
         type: boolean
         required: false
         default: false
@@ -21,26 +39,35 @@ jobs:
     steps:
       - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
         with:
+          cache-name: ${{ inputs.cache-name }}
           registry-password: ${{ secrets.registry-password }}
           registry-uri: ${{ secrets.registry-uri }}
 
   build:
     needs: install
+    if: ${{ inputs.run-build }}
     runs-on: ubuntu-latest
     steps:
       - uses: stardusttech-io/gha/.github/actions/build@master
         with:
-          build-artifact: package-build
+          build-artifact-name: ${{ inputs.build-artifact-name }}
           registry-password: ${{ secrets.registry-password }}
           registry-uri: ${{ secrets.registry-uri }}
 
+  lint:
+    needs: install
+    if: ${{ inputs.run-lint }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'A linting flow will go here one day'
+
   publish:
     needs: build
-    if: ${{ inputs.publish }}
+    if: ${{ inputs.run-publish }}
     runs-on: ubuntu-latest
     steps:
       - uses: stardusttech-io/gha/.github/actions/publish@master
         with:
-          build-artifact: package-build
+          build-artifact-name: ${{ inputs.build-artifact-name }}
           registry-password: ${{ secrets.registry-password }}
           registry-uri: ${{ secrets.registry-uri }}
