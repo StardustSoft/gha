@@ -17,7 +17,7 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: stardusttech-io/gha/actions/checkout-and-install@master
+    - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
       with:
         registry-password: ${{ inputs.registry-password }}
         registry-uri: ${{ inputs.registry-uri }}
