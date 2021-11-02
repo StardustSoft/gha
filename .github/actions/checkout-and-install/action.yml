@@ -42,7 +42,6 @@ runs:
           ${{ runner.os }}-${{ inputs.cache-name }}-
           ${{ runner.os }}-
 
-    - run: npm install
-      # TODO enable 'if' when composite actions support it
-      # if: steps.cache-dependencies.outputs.cache-hit != 'true'
+    - run: |
+        [[ "${{ steps.cache-dependencies.outputs.cache-hit }}" = true ]] && npm install || true
       shell: bash
