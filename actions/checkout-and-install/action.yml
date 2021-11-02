@@ -1,0 +1,48 @@
+name: Checkout and run npm install
+description: Checkouts out commit, sets up Node, and installs dependencies.
+
+inputs:
+  cache-name:
+    description: Cache name
+    required: true
+
+  registry-password:
+    description: Internal registry password
+    required: true
+
+  registry-uri:
+    description: Internal registry uri
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout the commit
+      uses: actions/checkout@v2
+
+    - name: Set up Node
+      uses: actions/setup-node@v2
+      with:
+        node-version: '16'
+
+    - name: Configure internal registry
+      uses: stardusttech-io/gha/actions/configure-registry@master
+      with:
+        password: ${{ inputs.registry-password }}
+        uri: ${{ inputs.registry-uri }}
+
+    - name: Cache dependencies
+      id: cache-dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-npm-${{ inputs.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-${{ inputs.cache-name }}-
+          ${{ runner.os }}-npm-
+          ${{ runner.os }}-
+
+    - run: npm install
+      # TODO enable 'if' when composite actions support it
+      # if: steps.cache-dependencies.outputs.cache-hit != 'true'
+      shell: bash

@@ -20,7 +20,7 @@ jobs:
     name: Install Dependencies
     runs-on: ubuntu-latest
     steps:
-      - uses: stardusttech-io/actions/.github/actions/install@master
+      - uses: stardusttech-io/gha/actions/checkout-and-install@master
         with:
           registry-password: ${{ secrets.registry-password }}
           registry-uri: ${{ secrets.registry-uri }}
@@ -30,7 +30,7 @@ jobs:
     needs: install
     runs-on: ubuntu-latest
     steps:
-      - uses: stardusttech-io/actions/.github/actions/build@master
+      - uses: stardusttech-io/gha/.github/actions/build@master
         with:
           build-artifact: package-build
           registry-password: ${{ secrets.registry-password }}
@@ -42,7 +42,7 @@ jobs:
     if: ${{ inputs.publish }}
     runs-on: ubuntu-latest
     steps:
-      - uses: stardusttech-io/actions/.github/actions/publish@master
+      - uses: stardusttech-io/gha/actions/publish@master
         with:
           build-artifact: package-build
           registry-password: ${{ secrets.registry-password }}
