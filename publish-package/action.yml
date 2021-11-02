@@ -11,6 +11,8 @@ inputs:
 runs:
   using: composite
   steps:
+    - run: cat ~/.npmrc
+      shell: bash
     - name: Configuring git user email
       run: git config --global user.email "github-actions@stardusttech.io"
       shell: bash
