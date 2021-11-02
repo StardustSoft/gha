@@ -29,8 +29,8 @@ runs:
     - name: Configure internal registry
       uses: stardusttech-io/gha/actions/configure-registry@master
       with:
-        password: ${{ inputs.registry-password }}
-        uri: ${{ inputs.registry-uri }}
+        registry-password: ${{ inputs.registry-password }}
+        registry-uri: ${{ inputs.registry-uri }}
 
     - name: Cache dependencies
       id: cache-dependencies

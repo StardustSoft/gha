@@ -27,7 +27,7 @@ runs:
       with:
         name: ${{ inputs.build-artifact }}
 
-    - uses: stardusttech-io/gha/.github/actions/configure-registry@master
+    - uses: stardusttech-io/gha/actions/configure-registry@master
       with:
         registry-password: ${{ inputs.registry-password }}
         registry-uri: ${{ inputs.registry-uri }}

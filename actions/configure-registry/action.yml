@@ -2,28 +2,22 @@ name: Configure internal registry
 description: Configure internal registry
 
 inputs:
-  uri:
-    description: Registry URI
+  registry-password:
+    description: Internal registry password
     required: true
 
-  password:
-    description: Registry password
+  registry-uri:
+    description: Internal registry uri
     required: true
 
 runs:
   using: composite
   steps:
-    - run: touch ~/.npmrc
-      shell: bash
-
-    - run: echo "@stardust:registry=https:${{ inputs.uri }}/" >> ~/.npmrc
-      shell: bash
-
-    - run: echo "${{ inputs.uri }}/:_password=${{ inputs.password }}" >> ~/.npmrc
-      shell: bash
-
-    - run: echo "${{ inputs.uri }}/:username=_json_key_base64" >> ~/.npmrc
-      shell: bash
-
-    - run: echo "${{ inputs.uri }}/:email=not.valid@email.com" >> ~/.npmrc
+    - name: Creating root ~/.npmrc file with internal registry config
+      run: |
+        touch ~/.npmrc
+        echo "@stardust:registry=https:${{ inputs.registry-uri }}/" >> ~/.npmrc
+        echo "${{ inputs.registry-uri }}/:_password=${{ inputs.registry-password }}" >> ~/.npmrc
+        echo "${{ inputs.registry-uri }}/:username=_json_key_base64" >> ~/.npmrc
+        echo "${{ inputs.registry-uri }}/:email=not.valid@email.com" >> ~/.npmrc
       shell: bash
