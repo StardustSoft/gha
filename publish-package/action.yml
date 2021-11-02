@@ -1,0 +1,20 @@
+name: Publish Package to Internal Registry
+
+description: Publish a package to the internal registry.
+
+inputs:
+  version:
+    description: The type of version (path, minor, etc.)
+    required: false
+    default: patch
+
+runs:
+  using: composite
+  steps:
+    - run: ls -a
+      shell: bash
+    - uses: stardusttech-io/actions/authenticate-registry@master
+    - run: npm version ${{ inputs.version }}
+      shell: bash
+    - run: npm publish
+      shell: bash

@@ -1,0 +1,30 @@
+name: Authenticate Internal Registry
+
+description: Authenticate internal registry.
+
+inputs:
+  registry-uri:
+    description: Registry URI
+    required: true
+
+  registry-password:
+    description: Registry password
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - run: touch ~/.npmrc
+      name: Creating .npmrc file in root
+      shell: bash
+    - run: echo "${{ inputs.registry-uri }}/:_password=${{ inputs.registry-password }}" >>~/.npmrc
+      name: Appending registry password
+      shell: bash
+    - run: echo "${{ inputs.registry-uri }}/:username=_json_key_base64" >>~/.npmrc
+      name: Appending registry username
+      shell: bash
+    - run: echo "${{ inputs.registry-uri }}/:email=not.valid@email.com" >>~/.npmrc
+      name: Appending registry email
+      shell: bash
+    - run: cat ~/.npmrc
+      shell: bash
