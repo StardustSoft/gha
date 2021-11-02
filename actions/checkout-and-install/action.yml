@@ -4,7 +4,8 @@ description: Checkouts out commit, sets up Node, and installs dependencies.
 inputs:
   cache-name:
     description: Cache name
-    required: true
+    required: false
+    default: node-modules
 
   registry-password:
     description: Internal registry password
@@ -36,10 +37,9 @@ runs:
       uses: actions/cache@v2
       with:
         path: ~/.npm
-        key: ${{ runner.os }}-npm-${{ inputs.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-${{ inputs.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-npm-${{ inputs.cache-name }}-
-          ${{ runner.os }}-npm-
+          ${{ runner.os }}-${{ inputs.cache-name }}-
           ${{ runner.os }}-
 
     - run: npm install
