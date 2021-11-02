@@ -43,5 +43,5 @@ runs:
           ${{ runner.os }}-
 
     - run: |
-        [[ "${{ steps.cache-dependencies.outputs.cache-hit }}" = 'true' ]] && npm install || true
+        if [[ "${{ steps.cache-dependencies.outputs.cache-hit }}" != "true" ]]; then npm install; fi
       shell: bash
