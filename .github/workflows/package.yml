@@ -1,4 +1,4 @@
-name: Build
+name: Internal package workflow
 
 on:
   workflow_call:
@@ -17,7 +17,6 @@ on:
 
 jobs:
   install:
-    name: Install Dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
@@ -26,7 +25,6 @@ jobs:
           registry-uri: ${{ secrets.registry-uri }}
 
   build:
-    name: Build Package
     needs: install
     runs-on: ubuntu-latest
     steps:
@@ -37,7 +35,6 @@ jobs:
           registry-uri: ${{ secrets.registry-uri }}
 
   publish:
-    name: Publish Package
     needs: build
     if: ${{ inputs.publish }}
     runs-on: ubuntu-latest
