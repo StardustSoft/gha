@@ -26,5 +26,5 @@ runs:
 
     - uses: stardusttech-io/actions/.github/actions/npm-cache@master
 
-    - run: npm run install
+    - run: npm install
       shell: bash
