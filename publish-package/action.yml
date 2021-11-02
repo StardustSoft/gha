@@ -11,6 +11,8 @@ inputs:
 runs:
   using: composite
   steps:
+    - run: ls -a
+      shell: bash
     - run: cat ~/.npmrc
       shell: bash
     - name: Configuring git user email
