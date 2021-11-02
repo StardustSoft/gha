@@ -3,6 +3,14 @@ name: Publish Package to Internal Registry
 description: Publish a package to the internal registry.
 
 inputs:
+  registry-password:
+    description: The registry password
+    required: true
+
+  registry-uri:
+    description: The registry URI
+    required: true
+
   version:
     description: The type of version (path, minor, etc.)
     required: false
@@ -11,17 +19,17 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v2
-      with:
-        repository: stardusttech-io/actions
-        ref: master
-        token: ${{ secrets.PAT }}
-        path: ./.github/actions
+    # - uses: actions/checkout@v2
+    #   with:
+    #     repository: stardusttech-io/actions
+    #     ref: master
+    #     token: ${{ inputs.github-token }}
+    #     path: ./.github/actions
 
     - uses: ./.github/actions/authenticate-registry
       with:
-        uri: ${{ secrets.REGISTRY_URI }}
-        password: ${{ secrets.REGISTRY_PASSWORD }}
+        uri: ${{ inputs.registry-uri }}
+        password: ${{ inputs.registry-password }}
 
     - name: Configuring git user email
       run: git config --global user.email "github-actions@stardusttech.io"
