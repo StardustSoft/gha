@@ -17,15 +17,23 @@ runs:
     - name: Creating global .npmrc file
       run: touch ~/.npmrc
       shell: bash
+
+    - name: Appending scoped @stardust registry
+      run: echo "@stardust:registry=https://us-east1-npm.pkg.dev/stardusttech-io/stardust-registry/" >> ~/.npmrc
+      shell: bash
+
     - name: Appending registry password
-      run: echo "${{ inputs.registry-uri }}/:_password=${{ inputs.registry-password }}" >>~/.npmrc
+      run: echo "//us-east1-npm.pkg.dev/stardusttech-io/stardust-registry/:_password=${{ inputs.registry-password }}" >> ~/.npmrc
       shell: bash
+
     - name: Appending registry username
-      run: echo "${{ inputs.registry-uri }}/:username=_json_key_base64" >>~/.npmrc
+      run: echo "//us-east1-npm.pkg.dev/stardusttech-io/stardust-registry/:username=_json_key_base64" >> ~/.npmrc
       shell: bash
+
     - name: Appending registry email
-      run: echo "${{ inputs.registry-uri }}/:email=not.valid@email.com" >>~/.npmrc
+      run: echo "//us-east1-npm.pkg.dev/stardusttech-io/stardust-registry/:email=not.valid@email.com" >> ~/.npmrc
       shell: bash
+
     - name: Echoing output
       run: cat ~/.npmrc
       shell: bash
