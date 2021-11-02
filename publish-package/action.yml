@@ -11,9 +11,18 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Configuring git user email
+      run: git config --global user.email "github-actions@stardusttech.io"
+      shell: bash
+
+    - name: Configuring git user name
+      run: git config --global user.name "GitHub Actions"
+      shell: bash
+
     - name: Versioning
       run: npm version ${{ inputs.version }}
       shell: bash
+
     - name: Publishing to internal registry
       run: npm publish
       shell: bash
