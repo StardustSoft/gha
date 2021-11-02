@@ -3,10 +3,6 @@ name: Authenticate Internal Registry
 description: Authenticate internal registry.
 
 inputs:
-  registry-uri:
-    description: Registry URI
-    required: true
-
   registry-password:
     description: Registry password
     required: true
