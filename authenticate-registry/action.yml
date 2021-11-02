@@ -1,6 +1,5 @@
-name: Authenticate Internal Registry
-
-description: Authenticate internal registry.
+name: Authenticate internal registry
+description: Authenticate internal registry
 
 inputs:
   uri:
