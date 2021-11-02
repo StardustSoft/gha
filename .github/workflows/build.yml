@@ -19,12 +19,12 @@ jobs:
         with:
           node-version: '16'
 
-      - uses: stardusttech-io/actions/.github/actions/authenticate-registry.yml@master
+      - uses: stardusttech-io/actions/.github/actions/authenticate-registry@master
         with:
           uri: ${{ secrets.registry-uri }}
           password: ${{ secrets.registry-password }}
 
-      - uses: stardusttech-io/actions/.github/actions/npm-cache.yml@master
+      - uses: stardusttech-io/actions/.github/actions/npm-cache@master
 
       - run: npm install
       - run: npm run build
