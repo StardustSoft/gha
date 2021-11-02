@@ -44,7 +44,7 @@ jobs:
           registry-uri: ${{ secrets.registry-uri }}
 
   build:
-    needs: install
+    needs: [install]
     if: ${{ inputs.run-build }}
     runs-on: ubuntu-latest
     steps:
@@ -55,14 +55,14 @@ jobs:
           registry-uri: ${{ secrets.registry-uri }}
 
   lint:
-    needs: install
+    needs: [install]
     if: ${{ inputs.run-lint }}
     runs-on: ubuntu-latest
     steps:
       - run: echo 'A linting flow will go here one day'
 
   publish:
-    needs: build
+    needs: [build, lint]
     if: ${{ inputs.run-publish }}
     runs-on: ubuntu-latest
     steps:
