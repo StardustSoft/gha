@@ -14,17 +14,18 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: touch ~/.npmrc
-      name: Creating .npmrc file in root
+    - name: Creating global .npmrc file
+      run: touch ~/.npmrc
       shell: bash
-    - run: echo "${{ inputs.registry-uri }}/:_password=${{ inputs.registry-password }}" >>~/.npmrc
-      name: Appending registry password
+    - name: Appending registry password
+      run: echo "${{ inputs.registry-uri }}/:_password=${{ inputs.registry-password }}" >>~/.npmrc
       shell: bash
-    - run: echo "${{ inputs.registry-uri }}/:username=_json_key_base64" >>~/.npmrc
-      name: Appending registry username
+    - name: Appending registry username
+      run: echo "${{ inputs.registry-uri }}/:username=_json_key_base64" >>~/.npmrc
       shell: bash
-    - run: echo "${{ inputs.registry-uri }}/:email=not.valid@email.com" >>~/.npmrc
-      name: Appending registry email
+    - name: Appending registry email
+      run: echo "${{ inputs.registry-uri }}/:email=not.valid@email.com" >>~/.npmrc
       shell: bash
-    - run: cat ~/.npmrc
+    - name: Echoing output
+      run: cat ~/.npmrc
       shell: bash

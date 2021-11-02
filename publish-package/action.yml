@@ -11,10 +11,9 @@ inputs:
 runs:
   using: composite
   steps:
-    - run: ls -a
+    - name: Versioning
+      run: npm version ${{ inputs.version }}
       shell: bash
-    - uses: stardusttech-io/actions/authenticate-registry@master
-    - run: npm version ${{ inputs.version }}
-      shell: bash
-    - run: npm publish
+    - name: Publishing to internal registry
+      run: npm publish
       shell: bash
