@@ -16,9 +16,9 @@ runs:
         repository: stardusttech-io/actions
         ref: master
         token: ${{ secrets.PAT }}
-        path: ./github/actions
+        path: ./.github/actions
 
-    - uses: ./github/actions/authenticate-registry
+    - uses: ./.github/actions/authenticate-registry
       with:
         uri: ${{ secrets.REGISTRY_URI }}
         password: ${{ secrets.REGISTRY_PASSWORD }}
