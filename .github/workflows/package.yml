@@ -19,6 +19,10 @@ on:
         type: boolean
         required: true
 
+      enable-test:
+        type: boolean
+        required: true
+
       enable-publish:
         type: boolean
         required: true
