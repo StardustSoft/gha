@@ -1,0 +1,27 @@
+name: Test
+description: Test
+
+inputs:
+  cache-name:
+    description: Cache name
+    required: true
+
+  registry-password:
+    description: Internal registry password
+    required: true
+
+  registry-uri:
+    description: Internal registry uri
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
+      with:
+        cache-name: ${{ inputs.cache-name }}
+        registry-password: ${{ inputs.registry-password }}
+        registry-uri: ${{ inputs.registry-uri }}
+
+    - run: npm run test
+      shell: bash

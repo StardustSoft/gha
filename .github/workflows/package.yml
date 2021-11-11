@@ -11,20 +11,17 @@ on:
         type: string
         required: true
 
-      run-build:
+      enable-build:
         type: boolean
-        required: false
-        default: true
+        required: true
 
-      run-lint:
+      enable-lint:
         type: boolean
-        required: false
-        default: false
+        required: true
 
-      run-publish:
+      enable-publish:
         type: boolean
-        required: false
-        default: false
+        required: true
 
     secrets:
       registry-password:
@@ -45,7 +42,7 @@ jobs:
 
   build:
     needs: [install]
-    if: ${{ inputs.run-build }}
+    if: ${{ inputs.enable-build }}
     runs-on: ubuntu-latest
     steps:
       - uses: stardusttech-io/gha/.github/actions/build@master
@@ -56,14 +53,29 @@ jobs:
 
   lint:
     needs: [install]
-    if: ${{ inputs.run-lint }}
+    if: ${{ inputs.enable-lint }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'A linting flow will go here one day'
+      - uses: stardusttech-io/gha/.github/actions/lint@master
+        with:
+          cache-name: ${{ inputs.cache-name }}
+          registry-password: ${{ inputs.registry-password }}
+          registry-uri: ${{ inputs.registry-uri }}
+
+  test:
+    needs: [install]
+    if: ${{ inputs.enable-test }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: stardusttech-io/gha/.github/actions/test@master
+        with:
+          cache-name: ${{ inputs.cache-name }}
+          registry-password: ${{ inputs.registry-password }}
+          registry-uri: ${{ inputs.registry-uri }}
 
   publish:
-    needs: [build, lint]
-    if: ${{ inputs.run-publish }}
+    needs: [build, lint, test]
+    if: ${{ inputs.enable-publish }}
     runs-on: ubuntu-latest
     steps:
       - uses: stardusttech-io/gha/.github/actions/publish@master

@@ -18,6 +18,16 @@ inputs:
     description: Internal registry uri
     required: true
 
+  workspace:
+    description: The name of the workspace
+    required: false
+    default: 'none'
+
+  workspace-path:
+    description: The path to the workspace
+    required: false
+    default: .
+
 runs:
   using: composite
   steps:
@@ -27,11 +37,16 @@ runs:
         registry-password: ${{ inputs.registry-password }}
         registry-uri: ${{ inputs.registry-uri }}
 
-    - run: npm run build
+    - run: >
+        if [[ "${{ inputs.workspace }}" = "none" ]]; then
+          npm run build;
+        else
+          npm run build --workspace "${{ inputs.workspace }}";
+        fi
       shell: bash
 
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.build-artifact-name }}
         path: |
-          dist
+          "${{ workspace-path }}/dist"
