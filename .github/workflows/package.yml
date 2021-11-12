@@ -80,7 +80,6 @@ jobs:
 
   publish:
     needs: [build, lint, test]
-    if: ${{ inputs.enable-publish }} && github.event.head_commit.committer.email != "gha@stardusttech.io"
     runs-on: ubuntu-latest
     steps:
       - uses: stardusttech-io/gha/.github/actions/publish@master
