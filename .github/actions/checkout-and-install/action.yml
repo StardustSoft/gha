@@ -2,10 +2,9 @@ name: Checkout and run npm install
 description: Checkouts out commit, sets up Node, and installs dependencies.
 
 inputs:
-  cache-name:
-    description: Cache name
-    required: false
-    default: node-modules
+  id:
+    description: Identifier used for cache and artifacts
+    required: true
 
   registry-password:
     description: Internal registry password
@@ -37,9 +36,9 @@ runs:
       uses: actions/cache@v2
       with:
         path: ./node_modules
-        key: ${{ runner.os }}-${{ inputs.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-${{ inputs.id }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-${{ inputs.cache-name }}-
+          ${{ runner.os }}-${{ inputs.id }}-
           ${{ runner.os }}-
 
     - run: |

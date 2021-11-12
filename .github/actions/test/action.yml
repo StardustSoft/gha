@@ -2,8 +2,8 @@ name: Test
 description: Test
 
 inputs:
-  cache-name:
-    description: Cache name
+  id:
+    description: Identifier used for cache and artifacts
     required: true
 
   registry-password:
@@ -19,7 +19,7 @@ runs:
   steps:
     - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
       with:
-        cache-name: ${{ inputs.cache-name }}
+        id: ${{ inputs.id }}
         registry-password: ${{ inputs.registry-password }}
         registry-uri: ${{ inputs.registry-uri }}
 

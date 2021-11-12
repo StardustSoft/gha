@@ -3,11 +3,7 @@ name: Internal package workflow
 on:
   workflow_call:
     inputs:
-      build-artifact-name:
-        type: string
-        required: true
-
-      cache-name:
+      id:
         type: string
         required: true
 
@@ -27,6 +23,10 @@ on:
         type: boolean
         required: true
 
+      persist:
+        type: string
+        required: true
+
     secrets:
       registry-password:
         required: true
@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
         with:
-          cache-name: ${{ inputs.cache-name }}
+          id: ${{ inputs.id }}
           registry-password: ${{ secrets.registry-password }}
           registry-uri: ${{ secrets.registry-uri }}
 
@@ -51,7 +51,8 @@ jobs:
     steps:
       - uses: stardusttech-io/gha/.github/actions/build@master
         with:
-          build-artifact-name: ${{ inputs.build-artifact-name }}
+          id: ${{ inputs.id }}
+          persist: ${{ inputs.persist }}
           registry-password: ${{ secrets.registry-password }}
           registry-uri: ${{ secrets.registry-uri }}
 
@@ -62,7 +63,7 @@ jobs:
     steps:
       - uses: stardusttech-io/gha/.github/actions/lint@master
         with:
-          cache-name: ${{ inputs.cache-name }}
+          id: ${{ inputs.id }}
           registry-password: ${{ inputs.registry-password }}
           registry-uri: ${{ inputs.registry-uri }}
 
@@ -73,7 +74,7 @@ jobs:
     steps:
       - uses: stardusttech-io/gha/.github/actions/test@master
         with:
-          cache-name: ${{ inputs.cache-name }}
+          id: ${{ inputs.id }}
           registry-password: ${{ inputs.registry-password }}
           registry-uri: ${{ inputs.registry-uri }}
 
@@ -84,6 +85,6 @@ jobs:
     steps:
       - uses: stardusttech-io/gha/.github/actions/publish@master
         with:
-          build-artifact-name: ${{ inputs.build-artifact-name }}
+          id: ${{ inputs.id }}
           registry-password: ${{ secrets.registry-password }}
           registry-uri: ${{ secrets.registry-uri }}

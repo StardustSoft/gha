@@ -2,18 +2,12 @@ name: Build
 description: Build
 
 inputs:
-  build-artifact-name:
-    description: Build artifact name
+  id:
+    description: Identifier used for cache and artifacts
     required: true
 
-  build-artifact-path:
-    description: Build artifact paths
-    required: true
-    default: |
-      dist
-
-  cache-name:
-    description: Cache name
+  persist:
+    description: Paths to persist
     required: true
 
   registry-password:
@@ -29,17 +23,12 @@ inputs:
     required: false
     default: 'none'
 
-  workspace-path:
-    description: The path to the workspace
-    required: false
-    default: .
-
 runs:
   using: composite
   steps:
     - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
       with:
-        cache-name: ${{ inputs.cache-name }}
+        id: ${{ inputs.id }}
         registry-password: ${{ inputs.registry-password }}
         registry-uri: ${{ inputs.registry-uri }}
 
@@ -53,5 +42,5 @@ runs:
 
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ inputs.build-artifact-name }}
-        path: ${{ inputs.build-artifact-path }}
+        name: ${{ inputs.id }}
+        path: ${{ inputs.persist }}
