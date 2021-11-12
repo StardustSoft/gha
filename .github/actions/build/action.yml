@@ -49,4 +49,5 @@ runs:
       with:
         name: ${{ inputs.build-artifact-name }}
         path: |
+          dist
           "${{ inputs.workspace-path }}/dist"
