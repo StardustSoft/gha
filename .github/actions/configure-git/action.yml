@@ -4,7 +4,7 @@ description: Configure git user
 runs:
   using: composite
   steps:
-    - run: git config --global user.email "github-actions@stardusttech.io"
+    - run: git config --global user.email "gha@stardusttech.io"
       shell: bash
 
     - run: git config --global user.name "GitHub Actions"

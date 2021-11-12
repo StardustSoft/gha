@@ -34,7 +34,10 @@ runs:
 
     - uses: stardusttech-io/gha/.github/actions/configure-git@master
 
-    - run: npm version patch
+    - run: npm version patch --message "v%s [skip ci]"
+      shell: bash
+
+    - run: git push
       shell: bash
 
     - run: npm publish
