@@ -42,7 +42,9 @@ runs:
     - run: npm version patch --message "v%s [skip ci]"
       shell: bash
 
-    - run: git push
+    - run: |
+        git pull
+        git push
       shell: bash
 
     - run: npm publish
