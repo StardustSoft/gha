@@ -15,11 +15,11 @@ on:
         type: boolean
         required: true
 
-      enable-test:
+      enable-publish:
         type: boolean
         required: true
 
-      enable-publish:
+      enable-test:
         type: boolean
         required: true
 
