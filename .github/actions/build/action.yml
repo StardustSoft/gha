@@ -6,6 +6,12 @@ inputs:
     description: Build artifact name
     required: true
 
+  build-artifact-path:
+    description: Build artifact paths
+    required: true
+    default: |
+      dist
+
   cache-name:
     description: Cache name
     required: true
@@ -48,6 +54,4 @@ runs:
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ inputs.build-artifact-name }}
-        path: |
-          dist
-          "${{ inputs.workspace-path }}/dist"
+        path: ${{ inputs.build-artifact-path }}
