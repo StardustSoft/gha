@@ -25,7 +25,7 @@ on:
 
       persist:
         type: string
-        required: true
+        required: false
 
     secrets:
       registry-password:
@@ -85,5 +85,6 @@ jobs:
       - uses: stardusttech-io/gha/.github/actions/publish@master
         with:
           id: ${{ inputs.id }}
+          persist: ${{ inputs.persist }}
           registry-password: ${{ secrets.registry-password }}
           registry-uri: ${{ secrets.registry-uri }}

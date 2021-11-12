@@ -6,6 +6,10 @@ inputs:
     description: Identifier used for cache and artifacts
     required: true
 
+  persist:
+    description: Paths to persist
+    required: true
+
   registry-password:
     description: Internal registry password
     required: true
@@ -24,6 +28,7 @@ runs:
         node-version: '16'
 
     - uses: actions/download-artifact@v2
+      if: ${{ inputs.persist }}
       with:
         name: ${{ inputs.id }}
 

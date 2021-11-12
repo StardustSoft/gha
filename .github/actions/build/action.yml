@@ -41,6 +41,7 @@ runs:
       shell: bash
 
     - uses: actions/upload-artifact@v2
+      if: ${{ inputs.persist }}
       with:
         name: ${{ inputs.id }}
         path: ${{ inputs.persist }}
