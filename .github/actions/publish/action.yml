@@ -4,11 +4,11 @@ description: Publish internal package
 inputs:
   build-artifact-name:
     description: Build artifact name
-    required: true
+    required: false
 
   persist:
     description: Paths to persist
-    required: true
+    required: false
 
   registry-password:
     description: Internal registry password
