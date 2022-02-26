@@ -40,6 +40,7 @@ on:
 
 jobs:
   build:
+    name: Build
     if: ${{ inputs.enable-build }}
     runs-on: ubuntu-latest
     steps:
@@ -53,6 +54,7 @@ jobs:
           workspace: ${{ inputs.workspace }}
 
   lint:
+    name: Lint
     if: ${{ inputs.enable-lint }}
     runs-on: ubuntu-latest
     steps:
@@ -64,6 +66,7 @@ jobs:
           workspace: ${{ inputs.workspace }}
 
   test:
+    name: Test
     if: ${{ inputs.enable-test }}
     runs-on: ubuntu-latest
     steps:
