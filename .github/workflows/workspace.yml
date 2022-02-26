@@ -27,6 +27,10 @@ on:
         type: string
         required: false
 
+      workspace:
+        type: string
+        required: true
+
     secrets:
       registry-password:
         required: true
@@ -46,6 +50,7 @@ jobs:
           persist: ${{ inputs.persist }}
           registry-password: ${{ secrets.registry-password }}
           registry-uri: ${{ secrets.registry-uri }}
+          workspace: ${{ inputs.workspace }}
 
   lint:
     if: ${{ inputs.enable-lint }}
@@ -56,6 +61,7 @@ jobs:
           install-cache-name: ${{ inputs.install-cache-name }}
           registry-password: ${{ inputs.registry-password }}
           registry-uri: ${{ inputs.registry-uri }}
+          workspace: ${{ inputs.workspace }}
 
   test:
     if: ${{ inputs.enable-test }}
@@ -66,3 +72,4 @@ jobs:
           install-cache-name: ${{ inputs.install-cache-name }}
           registry-password: ${{ inputs.registry-password }}
           registry-uri: ${{ inputs.registry-uri }}
+          workspace: ${{ inputs.workspace }}

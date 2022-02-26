@@ -14,6 +14,11 @@ inputs:
     description: Internal registry uri
     required: true
 
+  workspace:
+    description: The name of the workspace
+    required: false
+    default: 'none'
+
 runs:
   using: composite
   steps:
@@ -23,5 +28,10 @@ runs:
         registry-password: ${{ inputs.registry-password }}
         registry-uri: ${{ inputs.registry-uri }}
 
-    - run: npm run lint
+    - run: >
+        if [[ "${{ inputs.workspace }}" = "none" ]]; then
+          npm run lint;
+        else
+          npm run lint --workspace "${{ inputs.workspace }}";
+        fi
       shell: bash
