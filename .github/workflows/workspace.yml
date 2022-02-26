@@ -19,10 +19,6 @@ on:
         type: boolean
         required: true
 
-      enable-publish:
-        type: boolean
-        required: true
-
       enable-test:
         type: boolean
         required: true
@@ -39,17 +35,7 @@ on:
         required: true
 
 jobs:
-  install:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
-        with:
-          install-cache-name: ${{ inputs.install-cache-name }}
-          registry-password: ${{ secrets.registry-password }}
-          registry-uri: ${{ secrets.registry-uri }}
-
   build:
-    needs: [install]
     if: ${{ inputs.enable-build }}
     runs-on: ubuntu-latest
     steps:
@@ -62,7 +48,6 @@ jobs:
           registry-uri: ${{ secrets.registry-uri }}
 
   lint:
-    needs: [install]
     if: ${{ inputs.enable-lint }}
     runs-on: ubuntu-latest
     steps:
@@ -73,7 +58,6 @@ jobs:
           registry-uri: ${{ inputs.registry-uri }}
 
   test:
-    needs: [install]
     if: ${{ inputs.enable-test }}
     runs-on: ubuntu-latest
     steps:
@@ -82,15 +66,3 @@ jobs:
           install-cache-name: ${{ inputs.install-cache-name }}
           registry-password: ${{ inputs.registry-password }}
           registry-uri: ${{ inputs.registry-uri }}
-
-  publish:
-    needs: [build, lint, test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: stardusttech-io/gha/.github/actions/publish@master
-        with:
-          build-artifact-name: ${{ inputs.build-artifact-name }}
-          install-cache-name: ${{ inputs.install-cache-name }}
-          persist: ${{ inputs.persist }}
-          registry-password: ${{ secrets.registry-password }}
-          registry-uri: ${{ secrets.registry-uri }}

@@ -2,8 +2,8 @@ name: Publish internal package
 description: Publish internal package
 
 inputs:
-  id:
-    description: Identifier used for cache and artifacts
+  build-artifact-name:
+    description: Build artifact name
     required: true
 
   persist:
@@ -33,7 +33,7 @@ runs:
     - uses: actions/download-artifact@v2
       if: ${{ inputs.persist }}
       with:
-        name: ${{ inputs.id }}
+        name: ${{ inputs.build-artifact-name }}
 
     - uses: stardusttech-io/gha/.github/actions/configure-registry@master
       with:

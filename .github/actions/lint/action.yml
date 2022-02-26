@@ -2,8 +2,8 @@ name: Lint
 description: Lint
 
 inputs:
-  id:
-    description: Identifier used for cache and artifacts
+  install-cache-name:
+    description: Install cache name
     required: true
 
   registry-password:
@@ -19,7 +19,7 @@ runs:
   steps:
     - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
       with:
-        id: ${{ inputs.id }}
+        install-cache-name: ${{ inputs.install-cache-name }}
         registry-password: ${{ inputs.registry-password }}
         registry-uri: ${{ inputs.registry-uri }}
 

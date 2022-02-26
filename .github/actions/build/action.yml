@@ -2,8 +2,12 @@ name: Build
 description: Build
 
 inputs:
-  id:
-    description: Identifier used for cache and artifacts
+  build-artifact-name:
+    description: Build artifact name
+    required: true
+
+  install-cache-name:
+    description: Install cache name
     required: true
 
   persist:
@@ -28,7 +32,7 @@ runs:
   steps:
     - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
       with:
-        id: ${{ inputs.id }}
+        install-cache-name: ${{ inputs.install-cache-name }}
         registry-password: ${{ inputs.registry-password }}
         registry-uri: ${{ inputs.registry-uri }}
 
@@ -43,5 +47,5 @@ runs:
     - uses: actions/upload-artifact@v2
       if: ${{ inputs.persist }}
       with:
-        name: ${{ inputs.id }}
+        name: ${{ inputs.build-artifact-name }}
         path: ${{ inputs.persist }}
