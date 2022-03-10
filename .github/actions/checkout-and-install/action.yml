@@ -29,12 +29,15 @@ runs:
     - name: Cache dependencies
       uses: actions/cache@v2
       with:
-        path: ./node_modules
+        path: |
+          ./.yarn
+          ./node_modules
         key: ${{ runner.os }}-${{ inputs.install-cache-name }}-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-${{ inputs.install-cache-name }}-
           ${{ runner.os }}-
 
-    - run: |
-        if [[ "${{ steps.cache-dependencies.outputs.cache-hit }}" != "true" ]]; then yarn; fi
+    - name: Install Yarn (if not cached)
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: yarn install --cache-folder .yarn
       shell: bash
