@@ -16,6 +16,7 @@ runs:
     - name: Creating root ~/.npmrc file with internal registry config
       run: |
         touch ~/.npmrc
+        export STARDUST_REGISTRY_TOKEN="${{ inputs.registry-uri }}"
         echo "@stardustsoft:registry=https:${{ inputs.registry-uri }}/" >> ~/.npmrc
         echo "${{ inputs.registry-uri }}/:username=santiago-stardust" >> ~/.npmrc
         echo "${{ inputs.registry-uri }}/:email=github@santiago-stardust.aleeas.com" >> ~/.npmrc
