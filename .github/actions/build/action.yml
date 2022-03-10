@@ -14,12 +14,8 @@ inputs:
     description: Paths to persist
     required: true
 
-  registry-password:
-    description: Internal registry password
-    required: true
-
-  registry-uri:
-    description: Internal registry uri
+  registry-access-token:
+    description: Internal registry access token
     required: true
 
   workspace:
@@ -33,8 +29,7 @@ runs:
     - uses: stardusttech-io/gha/.github/actions/checkout-and-install@master
       with:
         install-cache-name: ${{ inputs.install-cache-name }}
-        registry-password: ${{ inputs.registry-password }}
-        registry-uri: ${{ inputs.registry-uri }}
+        registry-access-token: ${{ inputs.registry-access-token }}
 
     - run: >
         if [[ "${{ inputs.workspace }}" = "none" ]]; then

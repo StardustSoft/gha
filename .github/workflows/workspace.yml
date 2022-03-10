@@ -32,10 +32,7 @@ on:
         required: true
 
     secrets:
-      registry-password:
-        required: true
-
-      registry-uri:
+      registry-access-token:
         required: true
 
 jobs:
@@ -49,8 +46,7 @@ jobs:
           build-artifact-name: ${{ inputs.build-artifact-name }}
           install-cache-name: ${{ inputs.install-cache-name }}
           persist: ${{ inputs.persist }}
-          registry-password: ${{ secrets.registry-password }}
-          registry-uri: ${{ secrets.registry-uri }}
+          registry-access-token: ${{ secrets.registry-access-token }}
           workspace: ${{ inputs.workspace }}
 
   lint:
@@ -61,8 +57,7 @@ jobs:
       - uses: stardusttech-io/gha/.github/actions/lint@master
         with:
           install-cache-name: ${{ inputs.install-cache-name }}
-          registry-password: ${{ inputs.registry-password }}
-          registry-uri: ${{ inputs.registry-uri }}
+          registry-access-token: ${{ inputs.registry-access-token }}
           workspace: ${{ inputs.workspace }}
 
   test:
@@ -73,6 +68,5 @@ jobs:
       - uses: stardusttech-io/gha/.github/actions/test@master
         with:
           install-cache-name: ${{ inputs.install-cache-name }}
-          registry-password: ${{ inputs.registry-password }}
-          registry-uri: ${{ inputs.registry-uri }}
+          registry-access-token: ${{ inputs.registry-access-token }}
           workspace: ${{ inputs.workspace }}

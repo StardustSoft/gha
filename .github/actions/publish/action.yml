@@ -10,12 +10,8 @@ inputs:
     description: Paths to persist
     required: false
 
-  registry-password:
-    description: Internal registry password
-    required: true
-
-  registry-uri:
-    description: Internal registry uri
+  registry-access-token:
+    description: Internal registry access token
     required: true
 
 runs:
@@ -37,8 +33,7 @@ runs:
 
     - uses: stardusttech-io/gha/.github/actions/configure-registry@master
       with:
-        registry-password: ${{ inputs.registry-password }}
-        registry-uri: ${{ inputs.registry-uri }}
+        registry-access-token: ${{ inputs.registry-access-token }}
 
     - uses: stardusttech-io/gha/.github/actions/configure-git@master
 

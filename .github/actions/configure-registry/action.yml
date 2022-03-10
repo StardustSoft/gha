@@ -2,12 +2,8 @@ name: Configure internal registry
 description: Configure internal registry
 
 inputs:
-  registry-password:
-    description: Internal registry password
-    required: true
-
-  registry-uri:
-    description: Internal registry uri
+  registry-access-token:
+    description: Internal registry access token
     required: true
 
 runs:
@@ -16,7 +12,7 @@ runs:
     - name: Creating root ~/.npmrc file with internal registry config
       run: |
         touch ~/.npmrc
-        echo "STARDUST_REGISTRY_TOKEN=${{ inputs.registry-password }}" >> $GITHUB_ENV
+        echo "STARDUST_REGISTRY_TOKEN=${{ inputs.registry-access-token }}" >> $GITHUB_ENV
         echo "@stardustsoft:registry=https://npm.pkg.github.com/" >> ~/.npmrc
-        echo "//npm.pkg.github.com/:_authToken=${{ inputs.registry-password }}" >> ~/.npmrc
+        echo "//npm.pkg.github.com/:_authToken=${{ inputs.registry-access-token }}" >> ~/.npmrc
       shell: bash
