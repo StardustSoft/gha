@@ -32,7 +32,7 @@ runs:
       with:
         path: |
           .yarn
-          node_modules
+          **/node_modules
         key: ${{ runner.os }}-${{ inputs.install-cache-name }}-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-${{ inputs.install-cache-name }}-${{ hashFiles('**/yarn.lock') }}
