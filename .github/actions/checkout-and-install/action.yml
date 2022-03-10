@@ -27,17 +27,16 @@ runs:
         registry-access-token: ${{ inputs.registry-access-token }}
 
     - name: Cache dependencies
+      id: yarn-cache
       uses: actions/cache@v2
       with:
         path: |
           ./.yarn
-          ./node_modules
         key: ${{ runner.os }}-${{ inputs.install-cache-name }}-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-${{ inputs.install-cache-name }}-
-          ${{ runner.os }}-
+          ${{ runner.os }}-${{ inputs.install-cache-name }}-${{ hashFiles('**/yarn.lock') }}
 
     - name: Install Yarn (if not cached)
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install --cache-folder .yarn
       shell: bash
