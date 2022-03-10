@@ -31,7 +31,8 @@ runs:
       uses: actions/cache@v2
       with:
         path: |
-          ./.yarn
+          .yarn
+          node_modules
         key: ${{ runner.os }}-${{ inputs.install-cache-name }}-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-${{ inputs.install-cache-name }}-${{ hashFiles('**/yarn.lock') }}
