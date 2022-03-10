@@ -1,4 +1,4 @@
-name: Checkout and run npm install
+name: Checkout and run yarn install
 description: Checkouts out commit, sets up Node, and installs dependencies.
 
 inputs:
@@ -35,11 +35,11 @@ runs:
       uses: actions/cache@v2
       with:
         path: ./node_modules
-        key: ${{ runner.os }}-${{ inputs.install-cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-${{ inputs.install-cache-name }}-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-${{ inputs.install-cache-name }}-
           ${{ runner.os }}-
 
     - run: |
-        if [[ "${{ steps.cache-dependencies.outputs.cache-hit }}" != "true" ]]; then npm install; fi
+        if [[ "${{ steps.cache-dependencies.outputs.cache-hit }}" != "true" ]]; then yarn; fi
       shell: bash

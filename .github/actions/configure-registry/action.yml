@@ -17,8 +17,6 @@ runs:
       run: |
         touch ~/.npmrc
         echo "STARDUST_REGISTRY_TOKEN=${{ inputs.registry-password }}" >> $GITHUB_ENV
-        echo "@stardustsoft:registry=https:${{ inputs.registry-uri }}/" >> ~/.npmrc
-        echo "${{ inputs.registry-uri }}/:username=santiago-stardust" >> ~/.npmrc
-        echo "${{ inputs.registry-uri }}/:email=github@santiago-stardust.aleeas.com" >> ~/.npmrc
-        echo "${{ inputs.registry-uri }}/:_authToken=${{ inputs.registry-password }}" >> ~/.npmrc
+        echo "@stardustsoft:registry=https://npm.pkg.github.com/" >> ~/.npmrc
+        echo "//npm.pkg.github.com/:_authToken=${{ inputs.registry-password }}" >> ~/.npmrc
       shell: bash
